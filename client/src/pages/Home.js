@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { ProductCard } from '../components/ProductCard';
 
 export const Home = () =>{
@@ -10,7 +10,7 @@ export const Home = () =>{
   };
 
   return(
-    <Fragment>
+    <>
 
       <h1>Home page</h1>
 
@@ -47,7 +47,7 @@ export const Home = () =>{
 
       </div>
 
-    </Fragment>
+    </>
   );
 }
 

@@ -1,21 +1,22 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { Categories } from './pages/Categories';
+import { BrowserRouter } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { About } from './pages/About';
+import { Modal } from './components/Modal';
+import { useRoutes } from './routes';
 
 function App() {
+  const isAuth = false;
+
+  const routes = useRoutes(isAuth);
+  const navbar = Navbar(isAuth);
+
   return (
     <BrowserRouter>
-      <Navbar />
+      {navbar}
       <div className="container pt-4">
-        <Switch>
-          <Route path={'/'} exact component={Home} />
-          <Route path={'/categories'}  component={Categories} />
-          <Route path={'/about'}  component={About} />
-        </Switch>
+        { routes }
       </div>
+      <Modal />
     </BrowserRouter>
   );
 }

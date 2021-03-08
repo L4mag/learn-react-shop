@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { CatCard } from '../components/CatCard';
 
 export const Categories = () => {
@@ -9,16 +9,15 @@ export const Categories = () => {
   };
 
   return(
-    <Fragment>
+    <>
       <h1>Categories</h1>
       <br/>
-      <div className="container d-flex">
+      <div className="d-flex">
         <CatCard category={tempData} />
         <CatCard category={tempData} />
         <CatCard category={tempData} />
         <CatCard category={tempData} />
       </div>
-
-    </Fragment>
+    </>
   );
 }
