@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Modal } from './components/Modal';
@@ -10,13 +10,18 @@ function App() {
   const routes = useRoutes(isAuth);
   const navbar = Navbar(isAuth);
 
+  const [modalState, setModalState] = useState('show');
+
   return (
     <BrowserRouter>
       {navbar}
       <div className="container pt-4">
         { routes }
       </div>
-      <Modal />
+      <Modal
+        mState={modalState}
+        setMState={() => setModalState()}
+      />
     </BrowserRouter>
   );
 }

@@ -10,11 +10,6 @@ export const Navbar = (isAuth = false) => {
           Login
         </button>
       </li>
-      <li className="nav-item">
-        <button type="button " className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-          Registration
-        </button>
-      </li>
     </ul>
   );
 
