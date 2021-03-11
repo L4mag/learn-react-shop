@@ -1,14 +1,23 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {useContext} from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
-export const Navbar = (isAuth = false) => {
+export const Navbar = () => {
+  const history = useHistory();
+  const auth = useContext(AuthContext);
+
+  const logoutHandler = (event) => {
+    event.preventDefault();
+    auth.logout();
+    history.push('/');
+  };
 
   const authLinks = (
     <ul className="navbar-nav">
       <li className="nav-item">
-        <button type="button " className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <NavLink className="nav-link" to="/auth">
           Login
-        </button>
+        </NavLink>
       </li>
     </ul>
   );
@@ -16,7 +25,11 @@ export const Navbar = (isAuth = false) => {
   const authLinksLogout = (
     <ul className="navbar-nav">
       <li className="nav-item">
-        <button type="button " className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <button
+          type="button "
+          className="btn btn-primary"
+          onClick={logoutHandler}
+        >
           Logout
         </button>
       </li>
@@ -41,6 +54,7 @@ export const Navbar = (isAuth = false) => {
         <li className="nav-item">
           <NavLink className="nav-link" to="/mygoods">My goods</NavLink>
         </li>
+
       </ul>
 
       {authLinksLogout}
@@ -68,7 +82,7 @@ export const Navbar = (isAuth = false) => {
     </nav>
   );
 
-  if(isAuth){
+  if(auth.isAuth){
     return navLinksLoggedIn;
   } else {
     return navLinksNotLoggedIn;

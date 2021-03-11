@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React, {  } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { Modal } from './components/Modal';
 import { useRoutes } from './routes';
+import { AuthContext } from './context/AuthContext';
+import { useAuth } from './hooks/auth.hook';
+
 
 function App() {
-  const isAuth = false;
-
-  const routes = useRoutes(isAuth);
-  const navbar = Navbar(isAuth);
-
-  const [modalState, setModalState] = useState('show');
+  const {token, login, logout, userId, isAdmin} = useAuth();
+  const isAuth = !!token;
+  const routes = useRoutes(isAuth, isAdmin);
 
   return (
-    <BrowserRouter>
-      {navbar}
-      <div className="container pt-4">
-        { routes }
-      </div>
-      <Modal
-        mState={modalState}
-        setMState={() => setModalState()}
-      />
-    </BrowserRouter>
+      <AuthContext.Provider value={{
+        token, login, logout, userId, isAuth, isAdmin
+      }}>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container pt-4">
+            { routes }
+          </div>
+        </BrowserRouter>
+      </AuthContext.Provider>
   );
 }
 

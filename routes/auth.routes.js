@@ -26,7 +26,7 @@ router.post(
       });
     }
 
-    const {email, password} = req.body;
+    const {email, password, isAdmin} = req.body;
 
     const candidate = await User.findOne({email});
 
@@ -35,7 +35,7 @@ router.post(
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    const user = new User({email, password: hashedPassword});
+    const user = new User({email, password: hashedPassword, isAdmin});
 
     await user.save();
 
@@ -47,7 +47,7 @@ router.post(
 
 // /api/auth/login
 router.post(
-  'login',
+  '/login',
   [
     check('email', 'Incorrect email').normalizeEmail().isEmail(),
     check('password', 'Enter password').exists()
@@ -78,12 +78,12 @@ router.post(
       }
 
       const token = jwt.sign(
-        {userId: user.id},
+        {userId: user.id, isAdmin: user.isAdmin},
         config.get('jwtSecret'),
         { expiresIn: '1h'}
       )
 
-      res.json({token, userId: user.id});
+      res.json({token, userId: user.id, isAdmin: user.isAdmin});
 
     } catch (e) {
       res.status(500).json({message: 'Login error, try again'});
